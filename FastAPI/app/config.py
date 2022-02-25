@@ -1,0 +1,5 @@
+Server = 'localhost'
+Database = 'FastAPI'
+Driver = 'SQL Server Native Client 11.0'
+Username = 'Bostest'
+Password = 'Test!ng2@17'
