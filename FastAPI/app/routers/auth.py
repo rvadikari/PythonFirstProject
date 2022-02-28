@@ -1,6 +1,5 @@
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 from fastapi import status,APIRouter,HTTPException,Depends
-from flask import session
 from sqlalchemy.orm import Session
 from ..database import get_db
 from .. import models,utils,oauth2
