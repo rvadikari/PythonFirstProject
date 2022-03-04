@@ -1,6 +1,4 @@
 from datetime import datetime,timedelta
-
-import fastapi
 from . import schema
 from jose import JWTError,jwt
 from fastapi import Depends,status,HTTPException
@@ -29,12 +27,12 @@ def Verify_Access_Token(token:str,credentials_exception):
         payload=jwt.decode(token,SECRET_KEY,algorithms=[ALGORITHM])
         
         id:str=payload.get("user_id")
+        print(id)
 
         if id is None:
             raise credentials_exception
         schema.TokenData.id =id
         token_data=schema.TokenData()
-        print(token_data)
          
     except JWTError:
         raise credentials_exception
@@ -45,4 +43,5 @@ def get_current_user(token:str=Depends(oauth2_scheme),db:Session=Depends(databas
     detail="could not validate credentials", headers={"WWW-Authenticate":"Bearer"})
     token_data= Verify_Access_Token(token,credentials_exception)
     user=db.query(models.User).filter(models.User.id==token_data.id).first()
+   
     return user

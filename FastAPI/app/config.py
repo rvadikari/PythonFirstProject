@@ -1,5 +1,18 @@
-Server = 'localhost'
-Database = 'FastAPI'
-Driver = 'SQL Server Native Client 11.0'
-Username = 'Bostest'
-Password = 'Test!ng2@17'
+from pydantic import BaseSettings
+
+
+class Settings(BaseSettings):
+    database_hostname:str
+    database_driver:str
+    database_name:str
+    database_username:str
+    database_password:str
+    secret_key:str
+    algorithm:str
+    access_token_expire_minutes:int
+    
+    
+    class Config:
+       env_file= ".env"
+
+settings=Settings()

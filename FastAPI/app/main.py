@@ -1,44 +1,33 @@
 
-from email import message
-from random import randrange
-from typing import List
-from fastapi import FastAPI,Response,status,HTTPException,Depends
-from fastapi.params import Body
-
-
-
+from fastapi import FastAPI
 from . import models
-from .routers import post,user,auth
+from .routers import post,user,auth,vote
+from .database import engine
+from fastapi.middleware.cors import CORSMiddleware
 
-from sqlalchemy.orm import Session
-from .database import engine,get_db
-
-
-models.Base.metadata.create_all(bind=engine)
+# models.Base.metadata.create_all(bind=engine)
 
 app=FastAPI()
+origins = [
+    'https://www.google.com'
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app.include_router(user.router)
 app.include_router(post.router)
 app.include_router(auth.router)
+app.include_router(vote.router)
 
-
-
-     
-
-
-my_posts= [{"title":"post1", "content":"my test content1","published":True,"rating":4,"id":1},
-            {"title":"post2", "content":"my test content2","published":True,"rating":3,"id":2},
-            {"title":"post3", "content":"my test content3","published":True,"rating":4,"id":3}]
-
-def find_post(id:int):
-    for p in my_posts:
-        if p['id']== id:
-            return p
-       
 
 @app.get("/")
-async def root(db:Session=Depends(get_db)): 
-   return {"root method"}
+async def root(): 
+   return {"message":"Hello world"}
 
 
 

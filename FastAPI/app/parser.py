@@ -7,6 +7,7 @@ class Parser(object):
   # ...
 
   def filter_query(self, query):
+
     model_class = self._get_model_class(query) # returns the query's Model
     raw_filters = request.args.getlist('filter')
     for raw in raw_filters:
@@ -32,3 +33,6 @@ class Parser(object):
         filt = getattr(column, attr)(value)
       query = query.filter(filt)
     return query
+
+
+    print("hello")
