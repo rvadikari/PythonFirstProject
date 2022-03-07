@@ -7,11 +7,13 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import urllib as url
 from .config import settings
+import pyodbc
 
 
 # params=url.parse.quote_plus('DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + Server + ';DATABASE=' + Database + ';')
 # engine=create_engine("mssql+pyodbc:///?odbc_connect=%s&trusted_connection=yes" % params)
 # print(Database+" and "+ Server)
+conn = pyodbc.connect(f'DRIVER={settings.database_driver};SERVER={settings.database_hostname};DATABASE={settings.database_name};trusted_connection=yes')
 sqlalchemy_Database_URL=f'mssql+pyodbc://{settings.database_hostname }/{settings.database_name}?trusted_connection=yes&driver={settings.database_driver}'
 engine=create_engine(sqlalchemy_Database_URL)
 
