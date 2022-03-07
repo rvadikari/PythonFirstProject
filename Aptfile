@@ -1,4 +1,4 @@
 unixodbc
 unixodbc-dev
-pyodbc
+pyodbc==4.0.32
 libsqliteodbc
